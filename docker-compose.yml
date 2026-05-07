@@ -9,6 +9,7 @@ services:
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - PORT=3000
+      - DB_PATH=/app/data/movies.db
     volumes:
       - sqlite_data:/app/data
 
