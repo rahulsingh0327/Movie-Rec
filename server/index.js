@@ -1,15 +1,26 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import staticPlugin from "@fastify/static";
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import { saveRecommendation, getAllRecommendations, initDB } from "./db.js";
 
 dotenv.config();
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const fastify = Fastify({ logger: true });
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 await fastify.register(cors, { origin: "*" });
+
+// Serve React frontend static files from dist/
+await fastify.register(staticPlugin, {
+  root: path.join(__dirname, "../dist"),
+  prefix: "/",
+});
 
 // POST /recommend
 fastify.post("/recommend", async (request, reply) => {
@@ -42,7 +53,6 @@ fastify.post("/recommend", async (request, reply) => {
     const raw = completion.choices[0].message.content.trim();
     const recommendations = JSON.parse(raw);
 
-    // SQLite is synchronous — no await needed
     saveRecommendation(user_input, recommendations);
 
     return reply.send({ recommendations });
@@ -62,15 +72,16 @@ fastify.get("/history", async (request, reply) => {
   }
 });
 
-// Health check
-fastify.get("/", async (request, reply) => {
-  return { status: "Movie Recommender API is running 🎬" };
+// Catch-all — serve React app for any unknown route (SPA support)
+fastify.setNotFoundHandler((request, reply) => {
+  reply.sendFile("index.html");
 });
 
 const start = async () => {
   try {
     initDB();
     await fastify.listen({ port: process.env.PORT || 3000, host: "0.0.0.0" });
+    console.log("🎬 Server running at http://localhost:3000");
   } catch (err) {
     fastify.log.error(err);
     process.exit(1);
