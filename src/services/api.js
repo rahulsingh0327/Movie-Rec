@@ -1,7 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000";
-
 export const getMovieRecommendations = async (userInput) => {
-  const response = await fetch(`${API_BASE_URL}/recommend`, {
+  const response = await fetch("/recommend", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
