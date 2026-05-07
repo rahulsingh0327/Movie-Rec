@@ -1,6 +1,13 @@
 import Database from "better-sqlite3";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const db = new Database("/app/data/movies.db");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Works both locally and in Docker
+const dbPath = process.env.DB_PATH || path.join(__dirname, "movies.db");
+
+const db = new Database(dbPath);
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS recommendations (
@@ -11,6 +18,10 @@ db.exec(`
   )
 `);
 
+export const initDB = () => {
+  console.log("✅ SQLite database initialized at", dbPath);
+};
+
 export const saveRecommendation = (userInput, movies) => {
   const stmt = db.prepare(`
     INSERT INTO recommendations (user_input, recommended_movies)
@@ -20,7 +31,9 @@ export const saveRecommendation = (userInput, movies) => {
 };
 
 export const getAllRecommendations = () => {
-  const stmt = db.prepare(`SELECT * FROM recommendations ORDER BY timestamp DESC`);
+  const stmt = db.prepare(
+    `SELECT * FROM recommendations ORDER BY timestamp DESC`
+  );
   return stmt.all();
 };
 
