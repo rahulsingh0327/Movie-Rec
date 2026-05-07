@@ -1,6 +1,5 @@
 FROM node:18-alpine
 
-# Required for better-sqlite3 to compile
 RUN apk add --no-cache python3 make g++
 
 WORKDIR /app
@@ -10,7 +9,6 @@ RUN npm install
 
 COPY . .
 
-# Create data folder for SQLite
 RUN mkdir -p /app/data
 
 EXPOSE 3000
