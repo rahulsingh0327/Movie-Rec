@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  backend:
+    build: ./server
+    container_name: movie_backend
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PORT=3000
+    volumes:
+      - sqlite_data:/app/data
+
+volumes:
+  sqlite_data:

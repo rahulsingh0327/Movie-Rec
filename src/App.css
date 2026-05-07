@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f0f1a;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.movie-form {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.movie-form h1 {
+  font-size: 2.5rem;
+  margin-bottom: 8px;
+  color: #f5c518;
+}
+
+.subtitle {
+  color: #aaa;
+  margin-bottom: 24px;
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  background: #1a1a2e;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.input-group input:focus {
+  border-color: #f5c518;
+}
+
+.input-group button {
+  padding: 14px 24px;
+  background: #f5c518;
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.input-group button:hover:not(:disabled) {
+  background: #e0b000;
+}
+
+.input-group button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.loading {
+  text-align: center;
+  color: #aaa;
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+
+.error {
+  text-align: center;
+  color: #ff6b6b;
+  margin: 20px 0;
+}
+
+.movie-list h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #f5c518;
+}
+
+.movie-card {
+  display: flex;
+  gap: 16px;
+  background: #1a1a2e;
+  border: 1px solid #2a2a40;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.movie-card:hover {
+  transform: translateY(-2px);
+  border-color: #f5c518;
+}
+
+.movie-number {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #f5c518;
+  min-width: 32px;
+}
+
+.movie-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 4px;
+}
+
+.movie-year {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.movie-reason {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
