@@ -190,7 +190,7 @@ The app is deployed as a single monolithic service on **Render** using Docker.
 - SQLite database persists on Render's disk storage
 - OpenAI API key is set as a secret environment variable on Render
 
-**Live URL:** `https://movie-recommender.onrender.com`
+**Live URL:** `https://movie-rec-an3t.onrender.com`
 
 ---
 
