@@ -42,7 +42,8 @@ fastify.post("/recommend", async (request, reply) => {
     const raw = completion.choices[0].message.content.trim();
     const recommendations = JSON.parse(raw);
 
-    await saveRecommendation(user_input, recommendations);
+    // SQLite is synchronous — no await needed
+    saveRecommendation(user_input, recommendations);
 
     return reply.send({ recommendations });
   } catch (err) {
@@ -54,7 +55,7 @@ fastify.post("/recommend", async (request, reply) => {
 // GET /history
 fastify.get("/history", async (request, reply) => {
   try {
-    const history = await getAllRecommendations();
+    const history = getAllRecommendations();
     return reply.send({ history });
   } catch (err) {
     return reply.status(500).send({ error: "Failed to fetch history" });
@@ -68,7 +69,7 @@ fastify.get("/", async (request, reply) => {
 
 const start = async () => {
   try {
-    await initDB();
+    initDB();
     await fastify.listen({ port: process.env.PORT || 3000, host: "0.0.0.0" });
   } catch (err) {
     fastify.log.error(err);
